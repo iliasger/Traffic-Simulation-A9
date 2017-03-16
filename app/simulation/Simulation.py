@@ -1,5 +1,6 @@
 import json
 import traci
+import traci.constants as tc
 
 from colorama import Fore
 from app.logging import info
@@ -41,11 +42,16 @@ class Simulation(object):
 
         # start listening to all cars that arrived at their target
         # traci.simulation.subscribe((tc.VAR_ARRIVED_VEHICLES_IDS,))
+        traci.inductionloop.subscribe("loop0500_2")
         while 1:
             # Do one simulation step
             cls.tick += 1
+            # print(cls.tick)
             traci.simulationStep()
 
+            count = traci.inductionloop.getSubscriptionResults()['loop0500_2'][tc.LAST_STEP_VEHICLE_NUMBER]
+            if count is not 0:
+                print(count)
 
             if cls.hard_shoulder_on:
                 if 'passenger' not in traci.lane.getAllowed('Shoulder01_0'):
@@ -56,7 +62,6 @@ class Simulation(object):
                     print("Closing hard shoulder")
                     traci.lane.setDisallowed('Shoulder01_0', ['passenger'])
 
-            print(cls.tick)
             msg = dict()
             msg["tick"] = 1
             KafkaForword.publish(msg, Config.kafkaTopicTrips)
