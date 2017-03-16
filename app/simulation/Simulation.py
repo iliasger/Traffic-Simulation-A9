@@ -46,12 +46,15 @@ class Simulation(object):
             cls.tick += 1
             traci.simulationStep()
 
+
             if cls.hard_shoulder_on:
-                print("Opening hard shoulder")
-                traci.lane.setAllowed('Shoulder01_0', ['passenger'])
+                if 'passenger' not in traci.lane.getAllowed('Shoulder01_0'):
+                    print("Opening hard shoulder")
+                    traci.lane.setAllowed('Shoulder01_0', ['passenger'])
             else:
-                print("Closing hard shoulder")
-                traci.lane.setDisallowed('Shoulder01_0', ['passenger'])
+                if 'passenger' in traci.lane.getAllowed('Shoulder01_0'):
+                    print("Closing hard shoulder")
+                    traci.lane.setDisallowed('Shoulder01_0', ['passenger'])
 
             print(cls.tick)
             msg = dict()
