@@ -27,11 +27,13 @@ import app.Config
 import traci, sys
 
 info('#####################################', Fore.CYAN)
-info('#      Starting CrowdNav v0.1       #', Fore.CYAN)
+info('# Starting Traffic-Control-A9-v0.1  #', Fore.CYAN)
 info('#####################################', Fore.CYAN)
 info('# Configuration:', Fore.YELLOW)
 info('# Kafka-Host   -> ' + app.Config.kafkaHost, Fore.YELLOW)
-info('# Kafka-Topic1 -> ' + app.Config.kafkaTopicTrips, Fore.YELLOW)
+info('# Kafka-Topic1 -> ' + app.Config.kafkaTopicTicks, Fore.YELLOW)
+info('# Kafka-Topic2 -> ' + app.Config.kafkaTopicLoopDetectorOccupancies, Fore.YELLOW)
+info('# Kafka-Topic3 -> ' + app.Config.kafkaTopicCarSpeeds, Fore.YELLOW)
 # init sending updates to kafka and getting commands from there
 if app.Config.kafkaUpdates:
     KafkaForword.connect()
@@ -50,14 +52,3 @@ Simulation.start()
 info(Fore.RED + '# Shutdown' + Fore.RESET)
 traci.close()
 sys.stdout.flush()
-
-# sumoConfig = "A9_conf.sumocfg"
-#traci.start([sumoBinary, "-c", Config.sumoConfig,"--no-step-log", "true","--no-warnings","true"])
-#PORT=1122
-#sumoProcess = subprocess.Popen([sumoBinary, "-c", Config.sumoConfig, "--remote-port", str(PORT), "--random", "t"])
-#traci.init(PORT)
-
-# for run in range(0,3600):
-#     traci.simulationStep()
-#     traci.lane.setDisallowed('Shoulder01_0', ['passenger'])
-# traci.close()
