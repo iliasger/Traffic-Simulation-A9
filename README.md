@@ -9,7 +9,7 @@ https://github.com/Starofall/RTX/tree/traffic-control
 * Run `python setup.py install` to download all dependencies 
 * Install [SUMO](http://sumo.dlr.de) & set env var SUMO_HOME
 * Install [Kafka](https://kafka.apache.org/) and set kafkaHost in Config.py
-* Run `python run.py`
+* Run `python Run.py`. This will open the SUMO GUI.
 
 ### Note 
-The implementation is based on CrowdNav project: https://github.com/Starofall/CrowdNav
+The implementation is based on the CrowdNav project: https://github.com/Starofall/CrowdNav
